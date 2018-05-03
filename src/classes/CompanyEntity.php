@@ -14,19 +14,12 @@ class CompanyEntity {
    */
   public function __construct($data) {
     // no id if we're creating
-    // if (isset($data['id'])) {
-    //   $this->id = $data['id'];
-    // }
-    // $this->name = $data['name'];
-    // $this->description = $data['description'];
-    // $this->address = $data['address'];
-
-    if (isset($data->id)) {
-      $this->id = $data->id;
+    if (isset($data['id'])) {
+      $this->id = $data['id'];
     }
-    $this->name = $data->name;
-    $this->description = $data->description;
-    $this->address = $data->address;
+    $this->name = $data['name'];
+    $this->description = $data['description'];
+    $this->address = $data['address'];
   }
 
   public function getId() {

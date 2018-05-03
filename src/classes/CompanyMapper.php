@@ -4,12 +4,11 @@ class CompanyMapper extends Mapper {
   public function getCompanies() {
     $sql = 'SELECT * from companies';
 
-    // $results = [];
+    $results = [];
     $stmt = $this->db->query($sql);
-    $results = $stmt->fetchAll();
-    // while ($row = $stmt->fetch()) {
-    //   $results[] = $row; //new CompanyEntity($row);
-    // }
+    while ($row = $stmt->fetch()) {
+      $results[] = new CompanyEntity($row);
+    }
 
     return $results;
   }
