@@ -42,7 +42,41 @@ $app->get('/companies', function (Request $request, Response $response) {
   $this->logger->addInfo('Company List');
   $mapper = new CompanyMapper($this->db);
   $companies = $mapper->getCompanies();
+
   $response->getBody()->write(var_export($companies, true));
+  return $response;
+});
+
+$app->get('/companies/{id}', function (Request $request, Response $response, $args) {
+  $company_id = (int)$args['id'];
+  $mapper = new CompanyMapper($this->db);
+  $company = $mapper->getCompanyById($company_id);
+
+  $response->getBody()->write(var_export($company, true));
+  return $response;
+});
+
+$app->post('/companies', function (Request $request, Response $response) {
+  $data = $request->getParsedBody();
+  $company_data = [];
+  $company_data['name'] = filter_var($data['name'], FILTER_SANITIZE_STRING);
+  $company_data['description'] = filter_var($data['description'], FILTER_SANITIZE_STRING);
+  $company_data['address'] = filter_var($data['address'], FILTER_SANITIZE_STRING);
+
+  $company = new CompanyEntity($company_data);
+  $mapper = new CompanyMapper($this->db);
+  $mapper->createCompany($company);
+
+  $response->getBody()->write('Company Created');
+  return $response;
+});
+
+$app->delete('/companies/{id}', function (Request $request, Response $response, $args) {
+  $company_id = (int)$args['id'];
+  $mapper = new CompanyMapper($this->db);
+  $mapper->deleteCompanyById($company_id);
+
+  $response->getBody()->write('Company Deleted');
   return $response;
 });
 

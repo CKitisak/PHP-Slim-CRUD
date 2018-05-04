@@ -41,4 +41,13 @@ class CompanyEntity {
   public function getAddress() {
     return $this->address;
   }
+
+  // public function toJSON() {
+  //   $company = [];
+  //   $company['id'] = $this->getId();
+  //   $company['name'] = $this->getName();
+  //   $company['description'] = $this->getDescription();
+  //   $company['address'] = $this->getAddress();
+  //   return json_encode($company);
+  // }
 }

@@ -2,7 +2,7 @@
 
 class CompanyMapper extends Mapper {
   public function getCompanies() {
-    $sql = 'SELECT * from companies';
+    $sql = 'SELECT * FROM companies';
 
     $results = [];
     $stmt = $this->db->query($sql);
@@ -20,7 +20,7 @@ class CompanyMapper extends Mapper {
    * @return CompanyEntity  The company
    */
   public function getCompanyById($company_id) {
-    $sql = 'SELECT * from companies where id = :company_id';
+    $sql = 'SELECT * FROM companies WHERE id = :company_id';
 
     $stmt = $this->db->prepare($sql);
     $result = $stmt->execute(['company_id' => $company_id]);
@@ -30,8 +30,8 @@ class CompanyMapper extends Mapper {
     }
   }
 
-  public function save(CompanyEntity $company) {
-    $sql = 'insert into companies (name, description, address) values (:name, :description, :address)';
+  public function createCompany(CompanyEntity $company) {
+    $sql = 'INSERT INTO companies (name, description, address) VALUES (:name, :description, :address)';
 
     $stmt = $this->db->prepare($sql);
     $result = $stmt->execute([
@@ -41,7 +41,18 @@ class CompanyMapper extends Mapper {
     ]);
 
     if (!$result) {
-      throw new Exception('could not save record');
+      throw new Exception('could not create company');
+    }
+  }
+
+  public function deleteCompanyById($company_id) {
+    $sql = 'DELETE FROM companies WHERE id = :company_id';
+
+    $stmt = $this->db->prepare($sql);
+    $result = $stmt->execute(['company_id' => $company_id]);
+
+    if (!$result) {
+      throw new Exception('could not delete company');
     }
   }
 }
